@@ -49,6 +49,14 @@ export default function HeaderMenu({
   const buttons = [
     {
       onClick: e => {
+        alert("test");
+      },
+      icon: <ArrowUpIcon />,
+      label: 'Filter',
+      seprator: true
+    },
+    {
+      onClick: e => {
         dataDispatch({
           type: ActionTypes.UPDATE_COLUMN_HEADER,
           columnId,
@@ -106,6 +114,7 @@ export default function HeaderMenu({
       },
       icon: <ArrowRightIcon />,
       label: 'Insert right',
+      seprator: true
     },
     {
       onClick: e => {
@@ -202,6 +211,7 @@ export default function HeaderMenu({
         <div style={{ borderTop: `2px solid ${grey(200)}` }} />
         <div className="list-padding">
           {buttons.map(button => (
+            <>
             <button
               type="button"
               className="sort-button"
@@ -213,6 +223,10 @@ export default function HeaderMenu({
               </span>
               {button.label}
             </button>
+            {
+              button.seprator && <div style={{ borderTop: `2px solid ${grey(200)}` }} />
+            }
+            </>
           ))}
         </div>
       </div>

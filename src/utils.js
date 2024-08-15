@@ -12,7 +12,13 @@ export function makeData(count) {
   let data = [];
   let tags = [];
   let status = [];
+  const allTags = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const allStatus = ['Pending', 'Completed', 'In Progress'];
+  
   for (let i = 0; i < count; i++) {
+    let rowTags = faker.random.arrayElements(allTags, Math.floor(Math.random() * allTags.length) + 1);
+    let rowStatus = faker.random.arrayElement(allStatus);
+  
     let row = {
       ID: faker.datatype.uuid(),
       name: faker.name.firstName(),
@@ -21,20 +27,27 @@ export function makeData(count) {
       previous_prompt: faker.lorem.sentence(),
       next_prompt: faker.music.genre(),
       goal_description: faker.lorem.sentence(),
-      tags: faker.random.arrayElement(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']),
-      status: faker.random.arrayElement(['Pending', 'Completed', 'In Progress'])
+      tags: rowTags,
+      status: rowStatus,
     };
-
-    tags.push({ label: row.tags, backgroundColor: randomColor() });
-    status.push({ label: row.status, backgroundColor: randomColor() });
-
+  
+    rowTags.forEach(tag => {
+      if (!tags.some(t => t.label === tag)) {
+        tags.push({ label: tag, backgroundColor: randomColor() });
+      }
+    });
+  
+    if (!status.some(s => s.label === rowStatus)) {
+      status.push({ label: rowStatus, backgroundColor: randomColor() });
+    }
+  
     data.push(row);
   }
   
   tags = tags.filter(
     (a, i, self) => self.findIndex(b => b.label === a.label) === i
   );
-  
+    
   status = status.filter(
     (a, i, self) => self.findIndex(b => b.label === a.label) === i
   );
@@ -138,3 +151,14 @@ export const DataTypes = Object.freeze({
 export const Constants = Object.freeze({
   ADD_COLUMN_ID: 999999,
 });
+
+
+
+export function processInitialValue(dataType, value) {
+  switch (dataType) {
+    case DataTypes.MULTISELECT:
+      return Array.isArray(value) ? value : [];
+    default:
+      return typeof value === 'string' || typeof value === 'number' ? value : '';
+  }
+}

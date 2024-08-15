@@ -7,6 +7,7 @@ export default function Badge({ value, backgroundColor }) {
       style={{
         backgroundColor: backgroundColor,
         padding: '2px 6px',
+        margin: '0 4px',
       }}
     >
       {value}

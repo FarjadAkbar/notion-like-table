@@ -18,27 +18,27 @@ export default function MultiSelectCell({
   const [showSelect, setShowSelect] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   const [addSelectRef, setAddSelectRef] = useState(null);
+  const [selectedValues, setSelectedValues] = useState(initialValue || []);
   const { styles, attributes } = usePopper(selectRef, selectPop, {
     placement: 'bottom-start',
     strategy: 'fixed',
   });
-  const [value, setValue] = useState({ value: initialValue, update: false });
 
   useEffect(() => {
-    setValue({ value: initialValue, update: false });
+    setSelectedValues(initialValue || []);
   }, [initialValue]);
 
   useEffect(() => {
-    if (value.update) {
+    if (selectedValues.length) {
       dataDispatch({
         type: ActionTypes.UPDATE_CELL,
         columnId,
         rowIndex,
-        value: value.value,
+        value: selectedValues,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value, columnId, rowIndex]);
+  }, [selectedValues, columnId, rowIndex]);
 
   useEffect(() => {
     if (addSelectRef && showAdd) {
@@ -46,8 +46,8 @@ export default function MultiSelectCell({
     }
   }, [addSelectRef, showAdd]);
 
-  function getColor() {
-    let match = options.find(option => option.label === value.value);
+  function getColor(label) {
+    let match = options.find(option => option.label === label);
     return (match && match.backgroundColor) || grey(200);
   }
 
@@ -82,15 +82,12 @@ export default function MultiSelectCell({
   }
 
   function handleOptionClick(option) {
-    setValue({ value: option.label, update: true });
-    setShowSelect(false);
-  }
-
-  useEffect(() => {
-    if (addSelectRef && showAdd) {
-      addSelectRef.focus();
+    if (selectedValues.includes(option.label)) {
+      setSelectedValues(selectedValues.filter(value => value !== option.label));
+    } else {
+      setSelectedValues([...selectedValues, option.label]);
     }
-  }, [addSelectRef, showAdd]);
+  }
 
   return (
     <>
@@ -99,9 +96,9 @@ export default function MultiSelectCell({
         className="cell-padding d-flex cursor-default align-items-center flex-1" style={{ height: "100%" }}
         onClick={() => setShowSelect(true)}
       >
-        {value.value && (
-          <Badge value={value.value} backgroundColor={getColor()} />
-        )}
+        {selectedValues.map(value => (
+          <Badge key={value} value={value} backgroundColor={getColor(value)} />
+        ))}
       </div>
       {showSelect && (
         <div className="overlay" onClick={() => setShowSelect(false)} />
@@ -128,6 +125,7 @@ export default function MultiSelectCell({
             >
               {options.map(option => (
                 <div
+                  key={option.label}
                   className="cursor-pointer mr-5 mt-5"
                   onClick={() => handleOptionClick(option)}
                 >

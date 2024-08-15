@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataTypes } from '../utils';
+import { DataTypes, processInitialValue } from '../utils';
 import TextCell from './TextCell';
 import NumberCell from './NumberCell';
 import SelectCell from './SelectCell';
@@ -11,12 +11,16 @@ export default function Cell({
   column: { id, dataType, options },
   dataDispatch,
 }) {
+  // Process initialValue based on the dataType
+  const processedValue = processInitialValue(dataType, initialValue);
+
+
   function getCellElement() {
     switch (dataType) {
       case DataTypes.TEXT:
         return (
           <TextCell
-            initialValue={initialValue}
+            initialValue={processedValue}
             rowIndex={index}
             columnId={id}
             dataDispatch={dataDispatch}
@@ -25,7 +29,7 @@ export default function Cell({
       case DataTypes.NUMBER:
         return (
           <NumberCell
-            initialValue={initialValue}
+            initialValue={processedValue}
             rowIndex={index}
             columnId={id}
             dataDispatch={dataDispatch}
@@ -34,7 +38,7 @@ export default function Cell({
       case DataTypes.SELECT:
         return (
           <SelectCell
-            initialValue={initialValue}
+            initialValue={processedValue}
             options={options}
             rowIndex={index}
             columnId={id}
@@ -44,7 +48,7 @@ export default function Cell({
       case DataTypes.MULTISELECT:
         return (
           <MultiSelectCell
-            initialValue={initialValue}
+            initialValue={processedValue}
             options={options}
             rowIndex={index}
             columnId={id}
