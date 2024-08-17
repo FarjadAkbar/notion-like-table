@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import clsx from 'clsx';
 import {
   useTable,
@@ -29,13 +29,6 @@ export default function Table({
   dispatch: dataDispatch,
   skipReset,
 }) {
-  const [orderedColumns, setOrderedColumns] = useState(columns);
-
-  // Update columns when they change
-  React.useEffect(() => {
-    setOrderedColumns(columns);
-  }, [columns]);
-
   const sortTypes = useMemo(
     () => ({
       alphanumericFalsyLast(rowA, rowB, columnId, desc) {
@@ -69,8 +62,7 @@ export default function Table({
     totalColumnsWidth,
   } = useTable(
     {
-      columns: orderedColumns, // Use the ordered columns
-      // columns,
+      columns,
       data,
       defaultColumn,
       dataDispatch,
@@ -86,18 +78,18 @@ export default function Table({
 
   const onDragEnd = useCallback((result) => {
     if (!result.destination) return;
-
+  
     // Skip reordering if the last column is involved
     if (result.source.index === columns.length - 1 || result.destination.index === columns.length - 1) {
       return;
     }
-    
-    const reorderedColumns = Array.from(orderedColumns);
-    const [removed] = reorderedColumns.splice(result.source.index, 1);
-    reorderedColumns.splice(result.destination.index, 0, removed);
-
-    setOrderedColumns(reorderedColumns);
-  }, [orderedColumns]);
+  
+    dataDispatch({
+      type: ActionTypes.REORDER_COLUMNS,
+      sourceIndex: result.source.index,
+      destinationIndex: result.destination.index,
+    });
+  }, [dataDispatch, columns.length]);
 
   const RenderRow = useCallback(
     ({ index, style }) => {

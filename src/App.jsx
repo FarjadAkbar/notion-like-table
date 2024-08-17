@@ -9,6 +9,7 @@ import {
   DataTypes,
 } from './utils';
 import update from 'immutability-helper';
+import { Filter } from './filters';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -179,6 +180,48 @@ function reducer(state, action) {
       });
     case ActionTypes.ENABLE_RESET:
       return update(state, { skipReset: { $set: true } });
+    case ActionTypes.REORDER_COLUMNS:
+      const { sourceIndex, destinationIndex } = action;
+      const reorderedColumns = Array.from(state.columns);
+      const [removed] = reorderedColumns.splice(sourceIndex, 1);
+      reorderedColumns.splice(destinationIndex, 0, removed);
+      return {
+        ...state,
+        columns: reorderedColumns,
+      };
+    case ActionTypes.ADD_FILTER:
+      const existingFilterIndex = state.filters.findIndex(
+        (filter) => filter.columnId === action.columnId && filter.columnType === action.payload.columnType
+      );
+      let newFilters;
+      if (existingFilterIndex !== -1) {
+        // Update the existing filter
+        newFilters = state.filters.map((filter, index) =>
+          index === existingFilterIndex
+            ? { ...filter, ...action.payload } // update the filter with the new payload
+            : filter
+        );
+      } else {
+        // Add the new filter
+        newFilters = [...state.filters, { columnId: action.columnId, ...action.payload }];
+      }
+      return { ...state, filters: newFilters, skipReset: true };
+    case ActionTypes.UPDATE_FILTER:
+      return {
+        ...state,
+        filters: state.filters.map((filter, index) =>
+          index === action.index ? { ...filter, ...action.payload } : filter
+        ),
+      };
+    case ActionTypes.REMOVE_FILTER:
+      return {
+        ...state,
+        filters: state.filters.filter((_, index) => index !== action.index),
+      };
+    case ActionTypes.APPLY_FILTERS:
+      alert("apply")
+      // Implement the logic to apply filters to your data
+      return state;
     default:
       return state;
   }
@@ -188,8 +231,10 @@ function App() {
   const [state, dispatch] = useReducer(reducer, makeData(5));
 
   useEffect(() => {
+    console.log(state.filters, "filter");
     dispatch({ type: ActionTypes.ENABLE_RESET });
-  }, [state.data, state.columns]);
+  }, [state.data, state.columns, state.filters]);
+
 
   return (
     <div
@@ -201,6 +246,23 @@ function App() {
         margin: 'auto',
       }}
     >
+     {
+      state.filters.length > 0 && (
+        <>
+        {
+          state.filters.map((filter, index) => (
+            <Filter
+              key={index}
+              columnType={filter.columnType}
+              columnId={filter.columnId}
+              dispatch={dispatch}
+            />
+          ))
+        }
+        <button onClick={() => dispatch({ type: ActionTypes.APPLY_FILTERS })}>Apply</button>
+        </>
+      )
+     } 
       <Table
         columns={state.columns}
         data={state.data}

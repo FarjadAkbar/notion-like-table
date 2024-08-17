@@ -12,13 +12,24 @@ export function makeData(count) {
   let data = [];
   let tags = [];
   let status = [];
-  const allTags = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const allTags = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ];
   const allStatus = ['Pending', 'Completed', 'In Progress'];
-  
+
   for (let i = 0; i < count; i++) {
-    let rowTags = faker.random.arrayElements(allTags, Math.floor(Math.random() * allTags.length) + 1);
+    let rowTags = faker.random.arrayElements(
+      allTags,
+      Math.floor(Math.random() * allTags.length) + 1
+    );
     let rowStatus = faker.random.arrayElement(allStatus);
-  
+
     let row = {
       ID: faker.datatype.uuid(),
       name: faker.name.firstName(),
@@ -30,29 +41,28 @@ export function makeData(count) {
       tags: rowTags,
       status: rowStatus,
     };
-  
+
     rowTags.forEach(tag => {
       if (!tags.some(t => t.label === tag)) {
         tags.push({ label: tag, backgroundColor: randomColor() });
       }
     });
-  
+
     if (!status.some(s => s.label === rowStatus)) {
       status.push({ label: rowStatus, backgroundColor: randomColor() });
     }
-  
+
     data.push(row);
   }
-  
+
   tags = tags.filter(
     (a, i, self) => self.findIndex(b => b.label === a.label) === i
   );
-    
+
   status = status.filter(
     (a, i, self) => self.findIndex(b => b.label === a.label) === i
   );
 
-  console.log(data, "data")
   let columns = [
     {
       id: 'name',
@@ -126,7 +136,7 @@ export function makeData(count) {
       dataType: 'null',
     },
   ];
-  return { columns: columns, data: data, skipReset: false };
+  return { columns: columns, data: data, filters: [], skipReset: false };
 }
 
 export const ActionTypes = Object.freeze({
@@ -139,6 +149,11 @@ export const ActionTypes = Object.freeze({
   ADD_COLUMN_TO_RIGHT: 'add_column_to_right',
   DELETE_COLUMN: 'delete_column',
   ENABLE_RESET: 'enable_reset',
+  REORDER_COLUMNS: 'reorder_column',
+  ADD_FILTER: 'add_filter',
+  UPDATE_FILTER: 'update_filter',
+  REMOVE_FILTER: 'remove_filter',
+  APPLY_FILTERS: 'apply_filters',
 });
 
 export const DataTypes = Object.freeze({
@@ -152,13 +167,13 @@ export const Constants = Object.freeze({
   ADD_COLUMN_ID: 999999,
 });
 
-
-
 export function processInitialValue(dataType, value) {
   switch (dataType) {
     case DataTypes.MULTISELECT:
       return Array.isArray(value) ? value : [];
     default:
-      return typeof value === 'string' || typeof value === 'number' ? value : '';
+      return typeof value === 'string' || typeof value === 'number'
+        ? value
+        : '';
   }
 }

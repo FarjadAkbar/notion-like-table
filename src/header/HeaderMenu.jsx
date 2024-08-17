@@ -49,7 +49,12 @@ export default function HeaderMenu({
   const buttons = [
     {
       onClick: e => {
-        alert("test");
+        dataDispatch({
+          type: ActionTypes.ADD_FILTER,
+          columnId,
+          payload: { columnType: dataType, condition: '', value: '', columnId },
+        });
+        setShowHeaderMenu(false);
       },
       icon: <ArrowUpIcon />,
       label: 'Filter',
