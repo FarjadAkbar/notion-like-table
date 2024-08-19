@@ -255,7 +255,7 @@ function App() {
               key={index}
               columnType={filter.columnType}
               columnId={filter.columnId}
-              dispatch={dispatch}
+              options={filter.options}
             />
           ))
         }

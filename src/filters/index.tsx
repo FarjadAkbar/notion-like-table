@@ -5,10 +5,10 @@ import { NumberFilter } from './number';
 import { BooleanFilter } from './boolean';
 import { SelectFilter } from './select';
 
-export function Filter({ columnType, columnId }) {
+export function Filter({ columnType, columnId, options }) {
   const [condition, setCondition] = useState('');
   const [value, setValue] = useState('');
-
+console.log(columnType)
   return (
     <div className="filter-container">
       <div>
@@ -18,9 +18,9 @@ export function Filter({ columnType, columnId }) {
         {columnType === 'number' && (
           <NumberFilter columnId={columnId} filter={{ condition, value }} onChange={(filter) => { setCondition(filter.condition); setValue(filter.value); }} />
         )}
-        {/* {columnType === 'select' && (
-          <SelectFilter filter={{ condition, value }} onChange={(filter) => { setCondition(filter.condition); setValue(filter.value); }} />
-        )} */}
+        {columnType === 'select' && (
+          <SelectFilter options={options} filter={{ condition, value }} onChange={(filter) => { setCondition(filter.condition); setValue(filter.value); }} />
+        )}
         {columnType === 'boolean' && (
           <BooleanFilter filter={{ condition, value }} onChange={(filter) => { setCondition(filter.condition); setValue(filter.value); }} />
         )}

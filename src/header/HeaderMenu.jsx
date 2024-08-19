@@ -52,7 +52,7 @@ export default function HeaderMenu({
         dataDispatch({
           type: ActionTypes.ADD_FILTER,
           columnId,
-          payload: { columnType: dataType, condition: '', value: '', columnId },
+          payload: { columnType: dataType, condition: '', value: '', columnId, options: ['Pending', 'Completed', 'In Progress'] },
         });
         setShowHeaderMenu(false);
       },
