@@ -259,7 +259,7 @@ function App() {
             />
           ))
         }
-        <button onClick={() => dispatch({ type: ActionTypes.APPLY_FILTERS })}>Apply</button>
+        {/* <button onClick={() => dispatch({ type: ActionTypes.APPLY_FILTERS })}>Apply</button> */}
         </>
       )
      } 
