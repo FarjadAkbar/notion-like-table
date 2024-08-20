@@ -1,4 +1,5 @@
 import faker from 'faker';
+import { Constants, DataTypes } from '../constant';
 
 export function shortId() {
   return '_' + Math.random().toString(36).substr(2, 9);
@@ -31,7 +32,7 @@ export function makeData(count) {
     let rowStatus = faker.random.arrayElement(allStatus);
 
     let row = {
-      ID: faker.datatype.uuid(),
+      id: faker.datatype.uuid(),
       name: faker.name.firstName(),
       number: Math.floor(20 + Math.random() * 20),
       collection: faker.commerce.productName(),
@@ -139,34 +140,6 @@ export function makeData(count) {
   return { columns: columns, data: data, filters: [], skipReset: false };
 }
 
-export const ActionTypes = Object.freeze({
-  ADD_OPTION_TO_COLUMN: 'add_option_to_column',
-  ADD_ROW: 'add_row',
-  UPDATE_COLUMN_TYPE: 'update_column_type',
-  UPDATE_COLUMN_HEADER: 'update_column_header',
-  UPDATE_CELL: 'update_cell',
-  ADD_COLUMN_TO_LEFT: 'add_column_to_left',
-  ADD_COLUMN_TO_RIGHT: 'add_column_to_right',
-  DELETE_COLUMN: 'delete_column',
-  ENABLE_RESET: 'enable_reset',
-  REORDER_COLUMNS: 'reorder_column',
-  ADD_FILTER: 'add_filter',
-  UPDATE_FILTER: 'update_filter',
-  REMOVE_FILTER: 'remove_filter',
-  APPLY_FILTERS: 'apply_filters',
-});
-
-export const DataTypes = Object.freeze({
-  NUMBER: 'number',
-  TEXT: 'text',
-  SELECT: 'select',
-  MULTISELECT: 'multiselect',
-});
-
-export const Constants = Object.freeze({
-  ADD_COLUMN_ID: 999999,
-});
-
 export function processInitialValue(dataType, value) {
   switch (dataType) {
     case DataTypes.MULTISELECT:
@@ -176,4 +149,33 @@ export function processInitialValue(dataType, value) {
         ? value
         : '';
   }
+}
+
+export function grey(value) {
+  let reference = {
+    50: '#fafafa',
+    100: '#f5f5f5',
+    200: '#eeeeee',
+    300: '#e0e0e0',
+    400: '#bdbdbd',
+    500: '#9e9e9e',
+    600: '#757575',
+    700: '#616161',
+    800: '#424242',
+    900: '#212121',
+  };
+
+  return reference[value];
+}
+
+export function scrollbarWidth() {
+  const scrollDiv = document.createElement('div');
+  scrollDiv.setAttribute(
+    'style',
+    'width: 100px; height: 100px; overflow: scroll; position:absolute; top:-9999px;'
+  );
+  document.body.appendChild(scrollDiv);
+  const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+  document.body.removeChild(scrollDiv);
+  return scrollbarWidth;
 }

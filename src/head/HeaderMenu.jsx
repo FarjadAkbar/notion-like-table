@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import ArrowUpIcon from '../img/ArrowUp';
-import ArrowDownIcon from '../img/ArrowDown';
-import ArrowLeftIcon from '../img/ArrowLeft';
-import ArrowRightIcon from '../img/ArrowRight';
-import TrashIcon from '../img/Trash';
-import { grey } from '../colors';
-import TypesMenu from './TypesMenu';
+import ArrowUpIcon from '../../../img/ArrowUp';
+import ArrowDownIcon from '../../../img/ArrowDown';
+import ArrowLeftIcon from '../../../img/ArrowLeft';
+import ArrowRightIcon from '../../../img/ArrowRight';
+import TrashIcon from '../../../img/Trash';
+import TypesMenu from './typesMenu';
 import { usePopper } from 'react-popper';
-import { ActionTypes, shortId } from '../utils';
-import DataTypeIcon from './DataTypeIcon';
+import DataTypeIcon from './dataTypeIcon';
+import { grey, shortId } from '../../../utils';
+import { ActionTypes } from '../../../constant';
 
 export default function HeaderMenu({
   label,

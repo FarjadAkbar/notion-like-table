@@ -7,12 +7,12 @@ import {
   useSortBy,
 } from 'react-table';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import Cell from './cells/Cell';
-import Header from './header/Header';
-import PlusIcon from './img/Plus';
-import { ActionTypes } from './utils';
+import Cell from './cells';
+import Header from './header';
+import PlusIcon from '../../img/Plus';
+import { scrollbarWidth } from '../../utils';
 import { FixedSizeList } from 'react-window';
-import scrollbarWidth from './scrollbarWidth';
+import { ActionTypes } from '../../constant';
 
 const defaultColumn = {
   minWidth: 50,
@@ -137,7 +137,7 @@ export default function Table({
                 {headerGroups.map(headerGroup => (
                   <div {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
                     {headerGroup.headers.map((column, index) => (
-                      <Draggable key={column.id} draggableId={String(column.id)} index={index}>
+                      <Draggable key={index} draggableId={String(column.id)} index={index}>
                         {(provided) => (
                           <div
                             {...column.getHeaderProps()}

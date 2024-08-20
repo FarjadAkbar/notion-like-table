@@ -1,6 +1,6 @@
-import PlusIcon from '../img/Plus';
+import { ActionTypes, Constants } from '../../../constant';
+import PlusIcon from '../../../img/Plus';
 import React from 'react';
-import { ActionTypes, Constants } from '../utils';
 
 export default function AddColumnHeader({ getHeaderProps, dataDispatch }) {
   return (

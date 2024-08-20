@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { usePopper } from 'react-popper';
-import { Constants } from '../utils';
-import AddColumnHeader from './AddColumnHeader';
-import DataTypeIcon from './DataTypeIcon';
-import HeaderMenu from './HeaderMenu';
+import AddColumnHeader from './addColumnHeader';
+import DataTypeIcon from './dataTypeIcon';
+import HeaderMenu from './headerMenu';
+import { Constants } from '../../../constant';
 
 export default function Header({
   column: { id, created, label, dataType, getResizerProps, getHeaderProps },

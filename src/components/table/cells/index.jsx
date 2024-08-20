@@ -1,9 +1,10 @@
 import React from 'react';
-import { DataTypes, processInitialValue } from '../utils';
-import TextCell from './TextCell';
-import NumberCell from './NumberCell';
-import SelectCell from './SelectCell';
-import MultiSelectCell from './MultiSelect';
+import { processInitialValue } from '../../../utils';
+import TextCell from './textCell';
+import NumberCell from './numberCell';
+import SelectCell from './selectCell';
+import MultiSelectCell from './multiSelect';
+import { DataTypes } from '../../../constant';
 
 export default function Cell({
   value: initialValue,

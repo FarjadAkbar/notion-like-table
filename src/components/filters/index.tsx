@@ -2,9 +2,10 @@ import React from 'react';
 import { useState } from 'react';
 import { InputFilter } from './input';
 import { SelectFilter } from './select';
-import { DataTypes } from '../utils';
+import { DataTypes } from '../../constant';
 
-export function Filter({ columnType, columnId, options }) {
+
+export default function Filter({ columnType, columnId, options }) {
   const [condition, setCondition] = useState('');
   const [value, setValue] = useState('');
   return (

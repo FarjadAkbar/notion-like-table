@@ -1,6 +1,7 @@
 import React from 'react';
-import { ActionTypes, DataTypes, shortId } from '../utils';
-import DataTypeIcon from './DataTypeIcon';
+import { shortId } from '../../../utils';
+import DataTypeIcon from './dataTypeIcon';
+import { ActionTypes, DataTypes } from '../../../constant';
 
 function getLabel(type) {
   return type.charAt(0).toUpperCase() + type.slice(1);

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { usePopper } from 'react-popper';
-import Badge from '../Badge';
-import { grey } from '../colors';
-import PlusIcon from '../img/Plus';
-import { ActionTypes, randomColor } from '../utils';
+import PlusIcon from '../../../img/Plus';
+import { grey, randomColor } from '../../../utils';
+import { ActionTypes } from '../../../constant';
+import Badge from '../../Badge';
 
 export default function MultiSelectCell({
   initialValue,
