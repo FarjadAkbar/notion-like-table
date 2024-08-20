@@ -4,7 +4,7 @@ import { usePopper } from 'react-popper';
 import PlusIcon from '../../../img/Plus';
 import { grey, randomColor } from '../../../utils';
 import { ActionTypes } from '../../../constant';
-import Badge from '../../Badge';
+import Badge from '../../badge';
 
 export default function MultiSelectCell({
   initialValue,

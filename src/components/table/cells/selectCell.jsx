@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { usePopper } from 'react-popper';
 import { ActionTypes } from '../../../constant';
-import Badge from '../../Badge';
+import Badge from '../../badge';
 import PlusIcon from '../../../img/Plus';
 import { randomColor, grey } from '../../../utils';
 
