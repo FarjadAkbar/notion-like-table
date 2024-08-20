@@ -32,10 +32,10 @@ function App() {
           state.filters.map((filter, index) => (
             <Filter
               key={index}
-              columnType={filter.columnType}
-              columnId={filter.columnId}
-              options={filter.options}
+              filter={filter}
+              dispatch={dispatch}
             />
+
           ))
         }
         {/* <button onClick={() => dispatch({ type: ActionTypes.APPLY_FILTERS })}>Apply</button> */}

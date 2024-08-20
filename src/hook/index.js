@@ -263,8 +263,8 @@ function handleAddFilter(state, action) {
 function handleUpdateFilter(state, action) {
   return {
     ...state,
-    filters: state.filters.map((filter, index) =>
-      index === action.index ? { ...filter, ...action.payload } : filter
+    filters: state.filters.map((filter) =>
+      filter.columnId === action.columnId ? { ...filter, ...action.payload } : filter
     ),
   };
 }
@@ -273,5 +273,17 @@ function handleRemoveFilter(state, action) {
   return {
     ...state,
     filters: state.filters.filter((_, index) => index !== action.index),
+  };
+}
+
+
+function handleSearchFilter(state, action) {
+  return {
+    ...state,
+    filters: state.filters.map((filter, index) =>
+      index === action.index
+        ? { ...filter, searchTerm: action.payload }
+        : filter
+    ),
   };
 }

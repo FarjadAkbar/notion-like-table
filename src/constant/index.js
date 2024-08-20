@@ -25,3 +25,17 @@ export const ActionTypes = Object.freeze({
   export const Constants = Object.freeze({
     ADD_COLUMN_ID: 999999,
   });
+
+
+  export const Conditions = Object.freeze({
+    EQUALS: 'Equals',
+    GREATER_THAN: 'Greater than',
+    LESS_THAN: 'Less than',
+    CONTAINS: 'Contains',
+    STARTS_WITH: 'Starts With',
+    IS_EMPTY: 'Is Empty',
+    NOT_EMPTY: 'Not Empty',
+    NOT_EQUALS: 'Not Equals',
+    NOT_CONTAINS: 'Not Contains',
+    NOT_STARTS_WITH: 'Not Starts With',
+  })
