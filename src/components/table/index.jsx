@@ -128,14 +128,17 @@ export default function Table({
       >
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="droppable-columns" direction="horizontal">
-            {(provided) => (
+            {(provided, snapshot) => (
               <div
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                className="flex"
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className={clsx('flex', snapshot.isDraggingOver && 'dragging-over')}
               >
-                {headerGroups.map(headerGroup => (
-                  <div {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
+                {headerGroups.map((headerGroup, headerGroupIndex) => (
+                  <div
+                  {...headerGroup.getHeaderGroupProps()}
+                  key={`headerGroup-${headerGroupIndex}`} // Unique key for headerGroup
+                >
                     {headerGroup.headers.map((column, index) => (
                       <Draggable key={index} draggableId={String(column.id)} index={index}>
                         {(provided) => (
